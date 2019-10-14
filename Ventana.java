@@ -5,11 +5,16 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.net.URL;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -51,15 +56,8 @@ public class Ventana extends javax.swing.JFrame {
         Adyacencia = new javax.swing.JButton();
         mapa1 = new lab02.Mapa();
         DibujarOriginal = new javax.swing.JButton();
-        guardarprincipal = new javax.swing.JButton();
-        abrirprincipal = new javax.swing.JButton();
-        guardarKruskal = new javax.swing.JButton();
-        abrirKruskal = new javax.swing.JButton();
-        guardarPrim = new javax.swing.JButton();
-        abrirPrim = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,6 +91,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        PRIM.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         PRIM.setText("Prim");
         PRIM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,53 +133,19 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        guardarprincipal.setText("Guardar");
-        guardarprincipal.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarprincipalActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        abrirprincipal.setText("Abrir");
-        abrirprincipal.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("Abrir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                abrirprincipalActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-
-        guardarKruskal.setText("Guardar");
-        guardarKruskal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarKruskalActionPerformed(evt);
-            }
-        });
-
-        abrirKruskal.setText("Abrir");
-        abrirKruskal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                abrirKruskalActionPerformed(evt);
-            }
-        });
-
-        guardarPrim.setText("Guardar");
-        guardarPrim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarPrimActionPerformed(evt);
-            }
-        });
-
-        abrirPrim.setText("Abrir");
-        abrirPrim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                abrirPrimActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Grafo principal");
-
-        jLabel4.setText("Árbol de expansión mínima (Prim)");
-
-        jLabel5.setText("Árbol de expansión mínima (Kruskal)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,6 +155,30 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(KRUSKAL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Adyacencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(PRIM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(EliminarNodo))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(DibujarOriginal, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)
+                                .addGap(65, 65, 65)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Pruebas)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(Mensajes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(mapa1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -197,44 +186,7 @@ public class Ventana extends javax.swing.JFrame {
                                 .addGap(30, 30, 30)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(208, 208, 208)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(KRUSKAL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Adyacencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(PRIM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(EliminarNodo))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(DibujarOriginal, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Pruebas)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(Mensajes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(abrirprincipal)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(guardarprincipal))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(abrirKruskal)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(guardarKruskal))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(abrirPrim)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(guardarPrim)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(0, 13, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -248,41 +200,27 @@ public class Ventana extends javax.swing.JFrame {
                 .addComponent(mapa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Pruebas)
-                        .addComponent(Adyacencia))
-                    .addComponent(EliminarNodo))
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Mensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(KRUSKAL))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Pruebas)
+                            .addComponent(Adyacencia)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 25, Short.MAX_VALUE)
+                                .addComponent(KRUSKAL))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(Mensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(EliminarNodo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(PRIM)
                             .addComponent(DibujarOriginal))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(guardarprincipal)
-                    .addComponent(abrirprincipal)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(abrirPrim)
-                                .addComponent(guardarPrim))
-                            .addGap(36, 36, 36))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(abrirKruskal)
-                            .addComponent(guardarKruskal))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -292,10 +230,6 @@ public class Ventana extends javax.swing.JFrame {
     boolean addEdge = false;
     File FileNodos = new File("nodos.txt");
     File FileAdyacencias = new File("adyacencias.txt");
-    File FileNodosPrim = new File("nodosPrim.txt");
-    File FileAdyacenciasPrim = new File("adyacenciasPrim.txt");
-    File FileNodosKruskal = new File("nodosKruskal.txt");
-    File FileAdyacenciasKruskal = new File("adyacenciasKruskal.txt");
 
 
     private void PruebasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PruebasActionPerformed
@@ -496,29 +430,13 @@ public class Ventana extends javax.swing.JFrame {
         DibujarOriginal.setVisible(false);
     }//GEN-LAST:event_DibujarOriginalActionPerformed
 
-    private void abrirprincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirprincipalActionPerformed
-        AbrirArchivo(g,FileNodos, FileAdyacencias);
-    }//GEN-LAST:event_abrirprincipalActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        AbrirArchivo();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void guardarprincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarprincipalActionPerformed
-        GuardarArchivo(g,FileNodos, FileAdyacencias);
-    }//GEN-LAST:event_guardarprincipalActionPerformed
-
-    private void guardarKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarKruskalActionPerformed
-        GuardarArchivo(Kruskal.kruskal(g),FileNodosKruskal, FileAdyacenciasKruskal);
-    }//GEN-LAST:event_guardarKruskalActionPerformed
-
-    private void abrirKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirKruskalActionPerformed
-        AbrirArchivo(Kruskal.kruskal(g),FileNodosKruskal, FileAdyacenciasKruskal);
-    }//GEN-LAST:event_abrirKruskalActionPerformed
-
-    private void abrirPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirPrimActionPerformed
-       AbrirArchivo(Prim.prim(Seleccionado1),FileNodosPrim, FileAdyacenciasPrim);
-    }//GEN-LAST:event_abrirPrimActionPerformed
-
-    private void guardarPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarPrimActionPerformed
-        GuardarArchivo(Prim.prim(Seleccionado1),FileNodosPrim, FileAdyacenciasPrim);
-    }//GEN-LAST:event_guardarPrimActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        GuardarArchivo();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * Metodo que elimina un nodo especifico de las listas de arista de todos
@@ -663,8 +581,8 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
 
-    public void GuardarNodos(Grafo g, File file) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+    public void GuardarNodos() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FileNodos))) {
             for (Nodo nodo : g.Nodos) {
                 String nombre = nodo.getNombre();
                 int x = nodo.getX();
@@ -677,8 +595,8 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
 
-    public void GuardarAdyacencias(Grafo g, File file) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+    public void GuardarAdyacencias() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FileAdyacencias))) {
             for (Nodo nodo : g.Nodos) {
                 for (Arista arista : nodo.getArista()) {
                     String origen = arista.getOrigen().getNombre();
@@ -694,8 +612,14 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
 
-    public void AbrirNodos(Grafo g, File file) {
-        try (Scanner lector = new Scanner(file)) {
+    public void AbrirNodos() {
+        FileReader fr;
+        try {
+            fr = new FileReader(FileNodos);
+            BufferedReader br = new BufferedReader(fr);
+        } catch (FileNotFoundException ex) {
+        }
+        try (Scanner lector = new Scanner(FileNodos)) {
             while (lector.hasNextLine()) {
                 String linea = lector.nextLine();
                 String[] info = linea.split(",");
@@ -709,14 +633,20 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
 
-    public void AbrirAdyacencias(Grafo g, File file) {     
-        try (Scanner lector = new Scanner(file)) {
+    public void AbrirAdyacencias() {
+        FileReader fr;
+        try {
+            fr = new FileReader(FileAdyacencias);
+            BufferedReader br = new BufferedReader(fr);
+        } catch (FileNotFoundException ex) {
+        }
+        try (Scanner lector = new Scanner(FileAdyacencias)) {
             while (lector.hasNextLine()) {
                 String linea = lector.nextLine();
                 String[] info = linea.split(",");
                 Nodo origen = g.BuscarNodo(info[0]);
                 Nodo destino = g.BuscarNodo(info[1]);
-                Arista a = new Arista(origen, destino, (int) Double.parseDouble(info[2]));
+                Arista a = new Arista(origen, destino, (int)Double.parseDouble(info[2]));
                 origen.addArista(a);
 
             }
@@ -724,15 +654,15 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
 
-    public void AbrirArchivo(Grafo g, File nodos, File adyacencias) {
-        AbrirNodos(g, nodos);
-        AbrirAdyacencias(g, adyacencias);
+    public void AbrirArchivo() {
+        AbrirNodos();
+        AbrirAdyacencias();
         repaint();
     }
 
-    public void GuardarArchivo(Grafo g, File nodos, File adyacencias) {
-        GuardarNodos(g,nodos);
-        GuardarAdyacencias(g, adyacencias);
+    public void GuardarArchivo() {
+        GuardarNodos();
+        GuardarAdyacencias();
     }
 
     /**
@@ -778,17 +708,10 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel Mensajes;
     private javax.swing.JButton PRIM;
     private javax.swing.JButton Pruebas;
-    private javax.swing.JButton abrirKruskal;
-    private javax.swing.JButton abrirPrim;
-    private javax.swing.JButton abrirprincipal;
-    private javax.swing.JButton guardarKruskal;
-    private javax.swing.JButton guardarPrim;
-    private javax.swing.JButton guardarprincipal;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private lab02.Mapa mapa1;
     // End of variables declaration//GEN-END:variables
 
